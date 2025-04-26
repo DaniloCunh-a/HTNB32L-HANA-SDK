@@ -90,6 +90,8 @@ HT_I2C_API_ENABLE := y
 
 HT_DEFAULT_LINKER_FILE = n
 
+
+
 CFLAGS_INC += -I Inc
 
 LINK_FILE_PATH     = ./

@@ -1,7 +1,7 @@
 {
     "makefile.extensionOutputFolder": "./.vscode",
     "cortex-debug.variableUseNaturalFormat": true,
-    "cortex-debug.gdbPath": "/home/danilocunha/Documentos/Aula\ -\ Hana/gcc-arm-none-eabi-10.3-2021.10-x86_64",
+    "cortex-debug.gdbPath": "/home/danilocunha/Documentos/Aula\ -\ Hana/gcc-arm-none-eabi-10.3-2021.10-x86_64/bin/arm-none-eabi-gdb",
     "C_Cpp.errorSquiggles": "enabled",
     "files.associations": {
         "*.inc": "bitbake",

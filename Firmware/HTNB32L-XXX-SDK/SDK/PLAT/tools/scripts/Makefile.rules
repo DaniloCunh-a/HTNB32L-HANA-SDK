@@ -52,7 +52,7 @@ OBJS := $(addprefix $(BUILDDIR)/, $(obj-y))
 HT_DRIVER_LIB := $(addprefix $(BUILDDIR)/,$(ht_app_api-y))
 HT_THIRDPARTY_LIB := $(addprefix $(BUILDDIR)/,$(ht_thirdparty_api-y))
 HT_STARTUP_OBJS := $(addprefix $(BUILDDIR)/,$(ht_startup_lib-y))
-HT_MODULAR_LIBRARIES := $(addprefix $(BUILDDIR)/,$(ht_prebuild_libraries))
+HT_MODULAR_LIBRARIES := $(ht_prebuild_libraries)
 
 -include $(OBJS:.o=.d)
 

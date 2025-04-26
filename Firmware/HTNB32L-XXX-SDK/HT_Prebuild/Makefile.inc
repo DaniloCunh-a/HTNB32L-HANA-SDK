@@ -3,8 +3,7 @@ ht_prebuild_libraries :=
 ht_prebuild_libraries += $(HT_LIBDIR)/libdriver_private_ht.a \
 						$(HT_LIBDIR)/libdriver.a \
 						$(HT_LIBDIR)/liblfs.a
-                        
-
+                    
 ifeq ($(HT_LIBRARY_MQTT_ENABLE),y)
 
 ht_prebuild_libraries += $(HT_LIBDIR)/libfreertos.a \
@@ -57,3 +56,4 @@ ht_prebuild_libraries += $(HT_LIBDIR)/libfreertos.a \
                         $(HT_LIBDIR)/libHTsleep.a
 
 endif
+
