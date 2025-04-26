@@ -8,7 +8,7 @@ BUILDDIR ?= ../../Build/$(PROJECT)
 endif
 
 LIBDIR   ?= $(TOP)/SDK/PLAT/prebuild
-HT_LIBDIR := $(TOP)/HT_Prebuild/Libs
+HT_LIBDIR := $(TOP)HT_Prebuild/Libs
 
 #-------------------------------------------------------------------------------
 #		Rules

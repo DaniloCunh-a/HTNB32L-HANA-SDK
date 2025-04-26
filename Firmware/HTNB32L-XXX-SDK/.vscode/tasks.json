@@ -10,14 +10,14 @@
             "label": "Compile - MQTT_Example",
             "group": "build",
             "type": "shell",
-            "command": "make.exe",
+            "command": "make",
             "args": ["-j4", "gccall", "TARGET=qcx212_0h00", "V=0", "PROJECT=MQTT_Example"]
         },
         {
             "label": "Compile - ITTCHIP_Example",
             "group": "build",
             "type": "shell",
-            "command": "make.exe",
+            "command": "make",
             "args": ["-j4", "gccall", "TARGET=qcx212_0h00", "V=0", "PROJECT=ITTCHIP_Example"]
         },
         {
