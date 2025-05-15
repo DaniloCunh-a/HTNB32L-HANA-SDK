@@ -1,7 +1,7 @@
 {
     "makefile.extensionOutputFolder": "./.vscode",
     "cortex-debug.variableUseNaturalFormat": true,
-    "cortex-debug.gdbPath": "C:/gcc_arm/bin/arm-none-eabi-gdb",
+    "cortex-debug.gdbPath": "C:/Program Files (x86)/GNU Arm Embedded Toolchain/gcc_arm/bin/arm-none-eabi-gdb",
     "C_Cpp.errorSquiggles": "enabled",
     "files.associations": {
         "*.inc": "bitbake",
