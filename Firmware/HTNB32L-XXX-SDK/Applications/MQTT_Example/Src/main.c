@@ -26,14 +26,14 @@ extern USART_HandleTypeDef huart1;
 void Task1(void *pvParameters) {
     while (1) {
         printf("Tarefa 1 executando...\n");
-        vTaskDelay(pdMS_TO_TICKS(500));         // Delay de 500ms
+        vTaskDelay(pdMS_TO_TICKS(200));         // alterado para 200ms
     }
 }
 
 void Task2(void *pvParameters) {
     while (1) {
         printf("Tarefa 2 executando...\n");
-        vTaskDelay(pdMS_TO_TICKS(1000)); // Delay de 1000ms
+        vTaskDelay(pdMS_TO_TICKS(500)); // alterado para 500ms
     }
 }
 
