@@ -16,45 +16,83 @@
 #include "main.h"
 #include "FreeRTOS.h"
 #include "task.h"
+#include "HT_GPIO_Api.h"
 
 static uint32_t uart_cntrl = (ARM_USART_MODE_ASYNCHRONOUS | ARM_USART_DATA_BITS_8 | ARM_USART_PARITY_NONE | 
-                                ARM_USART_STOP_BITS_1 | ARM_USART_FLOW_CONTROL_NONE);
+                              ARM_USART_STOP_BITS_1 | ARM_USART_FLOW_CONTROL_NONE);
 
 extern USART_HandleTypeDef huart1;
 
+/* Variáveis globais compartilhadas */
+volatile uint8_t button_state = 0;  // Estado do botão (0 = solto, 1 = pressionado)
 
-void Task1(void *pvParameters) {
+/* Protótipos de funções */
+void Task_LeituraBotao(void *pvParameters);
+void Task_ControleLED(void *pvParameters);
+
+void Task_LeituraBotao(void *pvParameters) {
+    // Inicialização do botão (executa apenas uma vez)
+    HT_GPIO_ButtonInit();
+    
     while (1) {
-        printf("Tarefa 1 executando...\n");
-        vTaskDelay(pdMS_TO_TICKS(200));         // alterado para 200ms
+        // Lê o estado do botão (0 = pressionado, 1 = solto para botão pull-up)
+        if (GPIO_PinRead(BLUE_BUTTON_INSTANCE, BLUE_BUTTON_PIN) == 0) {
+            button_state = 1;  // Botão pressionado
+            printf("Botao PRESSIONADO\n");
+        } else {
+            button_state = 0;  // Botão solto
+        }
+        
+        // Delay para debounce e evitar leitura excessiva
+        vTaskDelay(pdMS_TO_TICKS(20));
     }
 }
 
-void Task2(void *pvParameters) {
+void Task_ControleLED(void *pvParameters) {
+    // Inicialização do LED (executa apenas uma vez)
+    HT_GPIO_LedInit();
+    
     while (1) {
-        printf("Tarefa 2 executando...\n");
-        vTaskDelay(pdMS_TO_TICKS(500)); // alterado para 500ms
+        // Controla o LED baseado no estado do botão
+        if (button_state) {
+            HT_GPIO_WritePin(BLUE_LED_PIN, BLUE_LED_INSTANCE, LED_ON);
+            printf("LED LIGADO\n");
+        } else {
+            HT_GPIO_WritePin(BLUE_LED_PIN, BLUE_LED_INSTANCE, LED_OFF);
+            printf("LED DESLIGADO\n");
+        }
+        
+        // Delay para sincronização com a task de leitura
+        vTaskDelay(pdMS_TO_TICKS(20));
     }
 }
 
-/**
-  \fn          int main_entry(void)
-  \brief       main entry function.
-  \return
-*/
 void main_entry(void) {
+    // Inicializa a comunicação serial para debug
     HAL_USART_InitPrint(&huart1, GPR_UART1ClkSel_26M, uart_cntrl, 115200);
-    printf("Exemplo FreeRTOS\n");
+    printf("Sistema de Controle LED-Botao com FreeRTOS\n");
 
-    xTaskCreate(Task1, "Blink", 128, NULL, 1, NULL);
-    xTaskCreate(Task2, "Print", 128, NULL, 1, NULL);
+    // Cria as tasks
+    xTaskCreate(Task_LeituraBotao,   // Função da task
+                "Leitura_Botao",     // Nome da task (para debug)
+                128,                // Tamanho da stack
+                NULL,               // Parâmetros
+                2,                  // Prioridade (maior para leitura)
+                NULL);              // Handle da task
 
+    xTaskCreate(Task_ControleLED,
+                "Controle_LED",
+                128,
+                NULL,
+                1,                  // Prioridade menor para controle
+                NULL);
+
+    // Inicia o escalonador do FreeRTOS
     vTaskStartScheduler();
     
-    printf("Nao deve chegar aqui.\n");
-
+    // Nunca deverá chegar aqui
+    printf("ERRO: Nao deveria chegar aqui!\n");
     while(1);
-
 }
 
 /******** HT Micron Semicondutores S.A **END OF FILE*/
